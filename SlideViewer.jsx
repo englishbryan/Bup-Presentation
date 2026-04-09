@@ -5,7 +5,7 @@ import {
     ChevronLeft, ChevronRight, Stethoscope, Users, HeartPulse,
     Crosshair, Map, Pill, Thermometer, ClipboardCheck,
     BadgeAlert, Sparkles, LineChart, HandHeart,
-    Baby, AlertCircle, Phone, Syringe, Mic, Droplets, Eye, Zap, Flame
+    Baby, AlertCircle, Phone, Syringe, Mic, Droplets, Eye, Zap, Flame, Maximize
 } from 'lucide-react';
 import mariaImg from './Media/Lanscape dark.jpeg';
 import step1 from './Media/step1.png';
@@ -22,6 +22,16 @@ const SlideViewer = () => {
     const prevSlide = useCallback(() => {
         setCurrentSlide((prev) => Math.max(prev - 1, 0));
     }, []);
+
+    const toggleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(err => {
+                console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    };
 
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -77,7 +87,7 @@ const SlideViewer = () => {
     ];
 
     return (
-        <div className="flex flex-col h-screen max-h-[850px] w-full bg-slate-950 text-slate-100 font-sans overflow-hidden rounded-xl shadow-2xl border border-slate-800">
+        <div id="presentation-container" className="flex flex-col h-screen max-h-[100vh] w-full bg-slate-950 text-slate-100 font-sans overflow-hidden shadow-2xl">
             <div className="flex-1 overflow-y-auto p-6 md:p-12 relative flex flex-col justify-center">
                 <div key={currentSlide} className="animate-in fade-in duration-300 h-full w-full flex flex-col justify-center">
                     {slides[currentSlide]}
@@ -97,6 +107,9 @@ const SlideViewer = () => {
                 </div>
 
                 <div className="flex gap-3 w-32 justify-end">
+                    <button onClick={toggleFullscreen} title="Toggle Fullscreen" className="p-2 rounded-lg hover:bg-slate-800 transition-colors text-slate-300">
+                        <Maximize size={22} />
+                    </button>
                     <button onClick={prevSlide} disabled={currentSlide === 0} className="p-2 rounded-lg hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-transparent transition-colors text-slate-300">
                         <ChevronLeft size={24} />
                     </button>
