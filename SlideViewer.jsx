@@ -11,6 +11,7 @@ import mariaImg from './Media/Lanscape dark.jpeg';
 import step1 from './Media/step1.png';
 import step2 from './Media/step2.png';
 import step3 from './Media/step3.png';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const SlideViewer = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -88,10 +89,19 @@ const SlideViewer = () => {
 
     return (
         <div id="presentation-container" className="flex flex-col h-screen max-h-[100vh] w-full bg-slate-950 text-slate-100 font-sans overflow-hidden shadow-2xl">
-            <div className="flex-1 overflow-y-auto p-6 md:p-12 relative flex flex-col justify-center">
-                <div key={currentSlide} className="animate-in fade-in duration-300 h-full w-full flex flex-col justify-center">
-                    {slides[currentSlide]}
-                </div>
+            <div className="flex-1 p-6 md:p-12 relative flex flex-col justify-center overflow-hidden">
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={currentSlide}
+                        initial={{ opacity: 0, y: 15, scale: 0.98, filter: 'blur(4px)' }}
+                        animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+                        exit={{ opacity: 0, y: -15, scale: 0.98, filter: 'blur(4px)' }}
+                        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                        className="h-full w-full flex flex-col justify-center"
+                    >
+                        {slides[currentSlide]}
+                    </motion.div>
+                </AnimatePresence>
             </div>
 
             <div className="h-16 bg-slate-900 border-t border-slate-800 flex items-center justify-between px-6 shrink-0">
