@@ -54,11 +54,11 @@ const SlideViewer = () => {
         <BupVsMethadoneSlide key="8" />,
         <AssessmentIntertitleSlide key="8.5" />,
         <RecognizingWithdrawalSlide key="10" />,
+        <ObjectiveSignsSlide key="14" />,
         <WithdrawalTimelinesSlide key="11" />,
         <FentanylGameChangerSlide key="9" />,
         <PreInductionChecklistSlide key="12" />,
         <COWSSlide key="13" />,
-        <ObjectiveSignsSlide key="14" />,
         <InductionPathwaysSlide key="15" />,
         <MaintenanceSelectionSlide key="16.5" />,
         <ComplicatingMethadoneSlide key="17" />,
@@ -219,14 +219,14 @@ const WhyStartInEDSlide = () => (
                 <div className="bg-slate-800 p-4 rounded-xl text-cyan-400 shrink-0"><UserCheck size={32} /></div>
                 <div>
                     <div className="text-3xl font-bold text-white mb-1">NNT = 2</div>
-                    <p className="text-slate-400">Number needed to treat to retain a patient in treatment.</p>
+                    <p className="text-slate-400">Number needed to treat to <span className="text-cyan-400 font-semibold animate-subtle-glow">retain a patient in treatment</span>.</p>
                 </div>
             </div>
             <div className="bg-slate-900 p-8 rounded-2xl border border-slate-800 flex items-center gap-6">
                 <div className="bg-slate-800 p-4 rounded-xl text-cyan-400 shrink-0"><Shield size={32} /></div>
                 <div>
                     <div className="text-3xl font-bold text-white mb-1">NNT = 3</div>
-                    <p className="text-slate-400">Number needed to treat to stop illicit drug use entirely.</p>
+                    <p className="text-slate-400">Number needed to treat to <span className="text-cyan-400 font-semibold animate-subtle-glow">stop illicit drug use entirely</span>.</p>
                 </div>
             </div>
         </div>
@@ -285,6 +285,13 @@ const WhatIsBuprenorphineSlide = () => (
                 <li className="flex gap-4 items-start">
                     <CheckCircle2 className="text-cyan-500 shrink-0 mt-1" size={24} />
                     <div>
+                        <h4 className="font-bold text-white text-lg underline decoration-cyan-500/30 underline-offset-4">Primary Pharmacology</h4>
+                        <p className="text-slate-400 font-medium italic">Buprenorphine is a partial opioid agonist that binds with high affinity to the &mu;-opioid receptor.</p>
+                    </div>
+                </li>
+                <li className="flex gap-4 items-start">
+                    <CheckCircle2 className="text-cyan-500 shrink-0 mt-1" size={24} />
+                    <div>
                         <h4 className="font-bold text-white text-lg">Safe for ED Initiation</h4>
                         <p className="text-slate-400">Ceiling effect means exceptionally low overdose risk compared to full agonists.</p>
                     </div>
@@ -309,25 +316,164 @@ const WhatIsBuprenorphineSlide = () => (
 );
 
 /* --- SLIDE 7 --- */
-const ReceptorPharmacologySlide = () => (
-    <div className="max-w-5xl mx-auto w-full">
-        <h2 className="text-3xl font-bold mb-8 text-center">Receptor Pharmacology</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-slate-900 border-l-4 border-cyan-500 p-8 rounded-2xl">
-                <Shield size={48} className="text-cyan-500 mb-4" />
-                <h3 className="text-2xl font-bold text-white mb-2">High Affinity (Blockade)</h3>
-                <p className="text-slate-400 mb-4">Buprenorphine binds to the &mu;-opioid receptor with greater affinity than nearly all other opioids (including fentanyl).</p>
-                <div className="bg-slate-950 p-4 rounded text-sm text-cyan-400 font-mono">Result: Displaces existing opioids.</div>
-            </div>
-            <div className="bg-slate-900 border-l-4 border-emerald-500 p-8 rounded-2xl">
-                <Activity size={48} className="text-emerald-500 mb-4" />
-                <h3 className="text-2xl font-bold text-white mb-2">Partial Activity (Ceiling)</h3>
-                <p className="text-slate-400 mb-4">Despite high binding, it only partially activates the receptor (40-50%).</p>
-                <div className="bg-slate-950 p-4 rounded text-sm text-emerald-400 font-mono">Result: Relieves craving without respiratory depression.</div>
+const ReceptorPharmacologySlide = () => {
+    const [showAffinity, setShowAffinity] = useState(false);
+    const [showCeiling, setShowCeiling] = useState(false);
+
+    const opioids = [
+        { name: "Buprenorphine", val: 95, color: "bg-cyan-500", ki: "0.2 nM" },
+        { name: "Fentanyl", val: 70, color: "bg-red-500/50", ki: "1.2 nM" },
+        { name: "Morphine", val: 40, color: "bg-slate-700", ki: "1.8 nM" },
+        { name: "Oxycodone", val: 25, color: "bg-slate-800", ki: "2.5 nM" }
+    ];
+
+    return (
+        <div className="max-w-5xl mx-auto w-full">
+            <h2 className="text-3xl font-bold mb-8 text-center">Receptor Pharmacology</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                {/* High Affinity Card */}
+                <div 
+                    onClick={() => setShowAffinity(!showAffinity)}
+                    className={`relative cursor-pointer group transition-all duration-500 preserve-3d ${showAffinity ? '[transform:rotateY(180deg)]' : ''} h-[400px]`}
+                >
+                    {/* Front Face */}
+                    <div className="absolute inset-0 bg-slate-900 border-l-4 border-cyan-500 p-8 rounded-2xl backface-hidden flex flex-col shadow-xl hover:border-cyan-400 transition-colors">
+                        <div className="flex justify-between items-start mb-6">
+                            <Shield size={64} className="text-cyan-500 group-hover:scale-110 transition-transform" />
+                            <div className="bg-cyan-500/10 p-2 rounded-lg text-cyan-400 animate-pulse">
+                                <LineChart size={20} />
+                            </div>
+                        </div>
+                        <h3 className="text-2xl font-bold text-white mb-4">High Affinity (Blockade)</h3>
+                        <p className="text-slate-400 text-lg mb-6 flex-1">
+                            Buprenorphine binds to the &mu;-opioid receptor with greater affinity than nearly all other opioids (including fentanyl).
+                        </p>
+                        <div className="bg-slate-950 p-6 rounded-xl text-center mt-auto border border-cyan-500/10">
+                            <div className="text-cyan-400 font-bold text-lg mb-1">Clinical Result</div>
+                            <p className="text-slate-300 text-sm italic">Displaces existing opioids and prevents further binding by full agonists.</p>
+                        </div>
+                    </div>
+
+                    {/* Back Face (Affinity Chart) */}
+                    <div className="absolute inset-0 bg-slate-900 border-2 border-cyan-500/50 p-8 rounded-2xl [transform:rotateY(180deg)] backface-hidden flex flex-col shadow-2xl">
+                        <h4 className="text-xl font-bold text-white mb-6 text-center underline decoration-cyan-500 underline-offset-8">Binding Affinity (Ki)</h4>
+                        <div className="space-y-6 flex-1">
+                            {opioids.map((op, i) => (
+                                <div key={i} className="space-y-1">
+                                    <div className="flex justify-between text-xs font-bold uppercase tracking-wider">
+                                        <span className={op.name === 'Buprenorphine' ? 'text-cyan-400' : 'text-slate-500'}>{op.name}</span>
+                                        <span className="text-slate-300">{op.ki}</span>
+                                    </div>
+                                    <div className="h-4 bg-slate-950 rounded-full overflow-hidden border border-white/5">
+                                        <div 
+                                            className={`h-full ${op.color} transition-all duration-1000 delay-300`} 
+                                            style={{ width: showAffinity ? `${op.val}%` : '0%' }}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <p className="text-[10px] text-slate-500 mt-4 text-center leading-tight">
+                            *Lower Ki = Tighter binding. Buprenorphine's extremely slow dissociation constant means it effectively locks onto the receptor.
+                        </p>
+                    </div>
+                </div>
+
+                {/* Partial Activity Card */}
+                <div 
+                    onClick={() => setShowCeiling(!showCeiling)}
+                    className={`relative cursor-pointer group transition-all duration-500 preserve-3d ${showCeiling ? '[transform:rotateY(180deg)]' : ''} h-[400px]`}
+                >
+                    {/* Front Face */}
+                    <div className="absolute inset-0 bg-slate-900 border-l-4 border-emerald-500 p-8 rounded-2xl backface-hidden flex flex-col shadow-xl hover:border-emerald-400 transition-colors">
+                        <div className="flex justify-between items-start mb-6">
+                            <Activity size={64} className="text-emerald-500 group-hover:scale-110 transition-transform" />
+                            <div className="bg-emerald-500/10 p-2 rounded-lg text-emerald-400 animate-pulse">
+                                <LineChart size={20} />
+                            </div>
+                        </div>
+                        <h3 className="text-2xl font-bold text-white mb-4">Partial Activity (Ceiling)</h3>
+                        <p className="text-slate-400 text-lg mb-6 flex-1">
+                            Despite high binding affinity, it only partially activates the receptor (approx 40-50%).
+                        </p>
+                        <div className="bg-slate-950 p-6 rounded-xl text-center border border-emerald-500/10">
+                            <div className="text-emerald-400 font-bold text-lg mb-1">Clinical Result</div>
+                            <p className="text-slate-300 text-sm italic">Relieves craving and withdrawal without causing significant respiratory depression.</p>
+                        </div>
+                    </div>
+
+                    {/* Back Face (Ceiling Effect Chart) */}
+                    <div className="absolute inset-0 bg-slate-900 border-2 border-emerald-500/50 p-6 rounded-2xl [transform:rotateY(180deg)] backface-hidden flex flex-col shadow-2xl overflow-hidden">
+                        <h4 className="text-xl font-bold text-white mb-2 text-center underline decoration-emerald-500 underline-offset-4">Dose-Response Curve</h4>
+                        <div className="h-48 relative mt-6 mx-4">
+                            {/* Y-Axis Label */}
+                            <div className="absolute -left-10 top-1/2 -rotate-90 text-[9px] font-bold text-slate-500 uppercase tracking-widest origin-center whitespace-nowrap">
+                                Receptor Activation
+                            </div>
+                            
+                            {/* SVG Chart */}
+                            <svg className="w-full h-full overflow-visible" viewBox="0 0 200 100" preserveAspectRatio="none">
+                                {/* Grid Lines */}
+                                <line x1="0" y1="100" x2="200" y2="100" stroke="#334155" strokeWidth="1" />
+                                <line x1="0" y1="0" x2="0" y2="100" stroke="#334155" strokeWidth="1" />
+                                
+                                {/* 100% Marker */}
+                                <line x1="0" y1="0" x2="200" y2="0" stroke="#334155" strokeWidth="0.5" strokeDasharray="2 2" />
+                                <text x="180" y="5" fill="#475569" fontSize="4" className="font-bold">100%</text>
+
+                                {/* 50% Marker */}
+                                <line x1="0" y1="50" x2="200" y2="50" stroke="#334155" strokeWidth="0.5" strokeDasharray="4 2" />
+                                <text x="175" y="47" fill="#64748b" fontSize="5" className="font-bold">50% PLATEAU</text>
+
+                                {/* Buprenorphine Line (Plateau) */}
+                                <path 
+                                    d={showCeiling ? "M 0 100 Q 40 50, 200 50" : "M 0 100 Q 0 100, 0 100"}
+                                    fill="none" 
+                                    stroke="#10b981" 
+                                    strokeWidth="3" 
+                                    strokeLinecap="round"
+                                    className="transition-all duration-1000 delay-500"
+                                />
+
+                                {/* Fentanyl Line (Linear) */}
+                                <path 
+                                    d={showCeiling ? "M 0 100 C 60 70, 80 0, 100 0" : "M 0 100 C 0 100, 0 100, 0 100"}
+                                    fill="none" 
+                                    stroke="#ef4444" 
+                                    strokeWidth="3" 
+                                    strokeLinecap="round"
+                                    className="transition-all duration-1000 delay-300 shadow-lg"
+                                />
+                            </svg>
+
+                            {/* X-Axis Label */}
+                            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[9px] font-bold text-slate-500 uppercase tracking-widest whitespace-nowrap">
+                                Dose Higher &rarr;
+                            </div>
+                        </div>
+
+                        {/* Legend and Caption - Pushed to bottom */}
+                        <div className="mt-auto pt-4 border-t border-slate-800/50">
+                            <div className="flex justify-center gap-6 mb-3">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
+                                    <span className="text-[10px] font-bold text-slate-300">Buprenorphine</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                                    <span className="text-[10px] font-bold text-slate-300">Fentanyl</span>
+                                </div>
+                            </div>
+                            <p className="text-[10px] text-slate-400 text-center leading-relaxed italic px-2">
+                                Buprenorphine's effect plateaus safely, preventing fatal respiratory depression even at high doses.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 /* --- SLIDE 8 --- */
 const BupVsMethadoneSlide = () => (
@@ -452,24 +598,35 @@ const COWSSlide = () => (
     <div className="max-w-5xl mx-auto w-full">
         <div className="mb-10 text-center">
             <h2 className="text-3xl font-bold mb-2">COWS Score Reference</h2>
-            <p className="text-slate-400 text-lg">Clinical Opiate Withdrawal Scale (0-48)</p>
+            <p className="text-slate-400 text-lg">Clinical Opiate Withdrawal Scale (0-48) &bull; 11-Item Assessment</p>
         </div>
         <div className="space-y-4">
             {[
-                { range: "5-8", title: "Mild", color: "bg-emerald-500", action: "Monitor — not yet ready" },
-                { range: "9-12", title: "Moderate", color: "bg-yellow-500", action: "Approaching threshold" },
-                { range: "13-24", title: "Mod-Severe", color: "bg-orange-500", action: "Induction threshold — proceed" },
-                { range: "25-48", title: "Severe", color: "bg-red-500", action: "Urgent — initiate immediately" }
+                { range: "5-8", title: "Mild", color: "bg-emerald-500", status: "NOT INDICATED", action: "Monitor — not yet ready", icon: X, statusColor: "text-slate-400", cardBg: "bg-slate-800/20 border-slate-700/50" },
+                { range: "9-12", title: "Moderate", color: "bg-yellow-500", status: "BORDERLINE", action: "Approaching threshold", icon: AlertTriangle, statusColor: "text-yellow-400", cardBg: "bg-yellow-500/5 border-yellow-500/30" },
+                { range: "13-24", title: "Mod-Severe", color: "bg-orange-500", status: "INDICATED", action: "Threshold met — proceed", icon: CheckCircle2, statusColor: "text-emerald-400", cardBg: "bg-emerald-500/10 border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.15)]" },
+                { range: "25-48", title: "Severe", color: "bg-red-500", status: "URGENT", action: "Initiate immediately", icon: Flame, statusColor: "text-red-400", cardBg: "bg-red-500/10 border-red-500/30" }
             ].map((item, idx) => (
-                <div key={idx} className="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex items-center gap-6">
-                    <div className={`${item.color} w-16 h-16 shrink-0 rounded-xl flex items-center justify-center text-xl font-bold text-slate-950`}>
-                        {item.range}
+                <div key={idx} className="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex items-center justify-between gap-6 transition-all hover:bg-slate-800/50">
+                    <div className="flex items-center gap-6">
+                        <div className={`${item.color} w-16 h-16 shrink-0 rounded-xl flex items-center justify-center text-xl font-black text-slate-950 shadow-inner`}>
+                            {item.range}
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-bold text-white tracking-wide">{item.title}</h3>
+                        </div>
                     </div>
-                    <div className="flex-1">
-                        <h3 className="text-xl font-bold text-white">{item.title}</h3>
-                    </div>
-                    <div className="bg-slate-950 py-3 px-6 rounded-lg text-right border border-slate-800 w-1/3">
-                        <p className="text-slate-200 font-medium text-sm">{item.action}</p>
+                    
+                    <div className={`py-4 px-6 rounded-xl border flex items-center gap-5 w-[380px] ${item.cardBg}`}>
+                        <item.icon size={28} className={item.statusColor} />
+                        <div className="flex flex-col text-left">
+                            <span className={`text-[11px] font-black tracking-widest uppercase mb-0.5 ${item.statusColor}`}>
+                                {item.status}
+                            </span>
+                            <span className="text-slate-200 font-medium text-sm leading-tight">
+                                {item.action}
+                            </span>
+                        </div>
                     </div>
                 </div>
             ))}
@@ -648,6 +805,17 @@ const BerneseProtocolSlide = () => (
             <h2 className="text-3xl font-bold mb-2">Low-Dose (Bernese) Protocol</h2>
             <p className="text-slate-400 text-lg">"Sneaking onto" the receptors to avoid precipitating withdrawal.</p>
         </div>
+
+        <div className="mb-6 bg-amber-500/10 border-l-4 border-amber-500 p-4 rounded-r-xl flex items-start gap-4 shadow-lg border border-transparent border-t-amber-500/20 border-r-amber-500/20 border-b-amber-500/20">
+            <AlertTriangle className="text-amber-500 shrink-0 mt-0.5" size={24} />
+            <div>
+                <h4 className="text-amber-400 font-bold mb-1">Specialist Consultation Required</h4>
+                <p className="text-slate-300 text-sm">
+                    This protocol should only be initiated in direct consultation with the <strong>Acute Pain Service</strong>, <strong>Psychiatry</strong>, <strong>Addiction Medicine</strong>, or <strong>Toxicology</strong>.
+                </p>
+            </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-slate-900 p-8 rounded-3xl border border-slate-800">
                 <h3 className="text-xl font-bold text-white mb-4">Indications</h3>
@@ -756,23 +924,46 @@ const RedZoneSlide = () => (
             <h2 className="text-3xl font-bold mb-2 flex items-center gap-3"><Activity className="text-red-500" /> The 90-Minute Red Zone Bundle</h2>
             <p className="text-slate-400 text-lg">Managing Precipitated Withdrawal.</p>
         </div>
-        <div className="relative mb-12">
-            <div className="absolute top-8 left-4 right-4 h-1 bg-slate-800 rounded-full z-0"></div>
-            <div className="grid grid-cols-3 gap-4 relative z-10">
-                <div className="flex flex-col items-center text-center">
-                    <div className="w-16 h-16 rounded-full bg-red-500 border-4 border-slate-950 flex items-center justify-center text-white font-bold text-xl mb-4">T=0</div>
-                    <h4 className="font-bold text-white mb-2">Aggressive Blockade</h4>
-                    <p className="text-slate-400 text-sm">16 mg Bup SL <br />+ 2 mg Lorazepam</p>
+        <div className="relative mb-14 mt-8 flex justify-between gap-6 px-4">
+            {/* Gradient Connecting Line (behind nodes) */}
+            <div className="absolute top-[4.5rem] left-20 right-20 h-1.5 bg-gradient-to-r from-red-600 via-orange-500 to-amber-500 rounded-full z-0 opacity-40"></div>
+            
+            {/* Step 1 */}
+            <div className="flex-1 relative z-10 flex flex-col pt-4">
+                <div className="w-20 h-20 rounded-full bg-slate-900 border-[5px] border-red-500 flex items-center justify-center text-red-500 font-black text-xl shadow-[0_0_25px_rgba(239,68,68,0.3)] mb-6 mx-auto">
+                    T=0
                 </div>
-                <div className="flex flex-col items-center text-center">
-                    <div className="w-16 h-16 rounded-full bg-orange-500 border-4 border-slate-950 flex items-center justify-center text-white font-bold text-xl mb-4">30m</div>
-                    <h4 className="font-bold text-white mb-2">Reassess</h4>
-                    <p className="text-slate-400 text-sm">If static: <br />give 16 mg Bup SL.</p>
+                <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 text-center flex-1 shadow-2xl flex flex-col justify-between">
+                    <h4 className="font-bold text-white text-lg mb-4 leading-snug">Aggressive Blockade</h4>
+                    <div className="bg-red-500/10 border border-red-500/20 text-red-200 rounded-xl py-4 px-3 text-sm font-medium mt-auto">
+                        16 mg Bup SL <br />+ 2 mg Lorazepam
+                    </div>
                 </div>
-                <div className="flex flex-col items-center text-center">
-                    <div className="w-16 h-16 rounded-full bg-yellow-500 border-4 border-slate-950 flex items-center justify-center text-slate-900 font-bold text-xl mb-4">60m+</div>
-                    <h4 className="font-bold text-white mb-2">Adjuncts</h4>
-                    <p className="text-slate-400 text-sm">No more benzos. Add Ketamine/Haldol.</p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="flex-1 relative z-10 flex flex-col pt-4">
+                <div className="w-20 h-20 rounded-full bg-slate-900 border-[5px] border-orange-500 flex items-center justify-center text-orange-500 font-black text-xl shadow-[0_0_25px_rgba(249,115,22,0.3)] mb-6 mx-auto">
+                    30m
+                </div>
+                <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 text-center flex-1 shadow-2xl flex flex-col justify-between">
+                    <h4 className="font-bold text-white text-lg mb-4 leading-snug">Reassessment</h4>
+                    <div className="bg-orange-500/10 border border-orange-500/20 text-orange-200 rounded-xl py-4 px-3 text-sm font-medium mt-auto">
+                        If static or worsening: <br />give 16 mg Bup SL
+                    </div>
+                </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="flex-1 relative z-10 flex flex-col pt-4">
+                <div className="w-20 h-20 rounded-full bg-slate-900 border-[5px] border-amber-500 flex items-center justify-center text-amber-500 font-black text-xl shadow-[0_0_25px_rgba(245,158,11,0.3)] mb-6 mx-auto">
+                    60m+
+                </div>
+                <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 text-center flex-1 shadow-2xl flex flex-col justify-between">
+                    <h4 className="font-bold text-white text-lg mb-4 leading-snug">Non-Opioid Adjuncts</h4>
+                    <div className="bg-amber-500/10 border border-amber-500/20 text-amber-200 rounded-xl py-4 px-3 text-sm font-medium mt-auto leading-relaxed">
+                        Stop benzos. <br />Add Ketamine or Haldol.
+                    </div>
                 </div>
             </div>
         </div>
@@ -786,23 +977,34 @@ const RedZoneSlide = () => (
 /* --- SLIDE 24 --- */
 const DischargeDosingSlide = () => (
     <div className="max-w-5xl mx-auto w-full text-center">
-        <h2 className="text-3xl font-bold mb-8">Discharge Rx: 2-Week Supply</h2>
-        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-10 max-w-3xl mx-auto">
-            <div className="space-y-6">
-                <div className="flex justify-between items-center border-b border-slate-800 pb-4">
-                    <span className="text-xl text-slate-300">Standard Maintenance</span>
-                    <span className="text-cyan-400 font-mono font-bold text-2xl bg-slate-950 px-4 py-2 rounded">16 mg/day</span>
+        <h2 className="text-3xl font-bold mb-6">Discharge Rx: 2-Week Supply</h2>
+        
+        <div className="max-w-3xl mx-auto mb-6 bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-xl flex items-start gap-4 text-left shadow-lg">
+            <Shield className="text-cyan-500 shrink-0 mt-0.5" size={24} />
+            <div>
+                <h4 className="text-cyan-400 font-bold mb-1">Suboxone Formulation</h4>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                    Discharge prescriptions should use the <strong>buprenorphine/naloxone</strong> combination (Suboxone). The naloxone component is inert sublingually but prevents misuse by precipitating withdrawal if the medication is dissolved and injected.
+                </p>
+            </div>
+        </div>
+
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 max-w-3xl mx-auto">
+            <div className="space-y-4">
+                <div className="flex justify-between items-center bg-emerald-500/10 p-5 rounded-xl border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)] transition-colors hover:bg-emerald-500/20">
+                    <span className="text-xl text-slate-200 font-medium tracking-wide">Standard Maintenance</span>
+                    <span className="text-emerald-400 font-black text-2xl drop-shadow-md">16 mg/day</span>
                 </div>
-                <div className="flex justify-between items-center border-b border-slate-800 pb-4">
-                    <span className="text-xl text-slate-300">Higher Dependence</span>
-                    <span className="text-cyan-400 font-mono font-bold text-2xl bg-slate-950 px-4 py-2 rounded">24 mg/day</span>
+                <div className="flex justify-between items-center bg-amber-500/10 p-5 rounded-xl border border-amber-500/30 shadow-[0_0_15px_rgba(245,158,11,0.05)] transition-colors hover:bg-amber-500/20">
+                    <span className="text-xl text-slate-200 font-medium tracking-wide">Higher Dependence</span>
+                    <span className="text-amber-400 font-black text-2xl drop-shadow-md">24 mg/day</span>
                 </div>
-                <div className="flex justify-between items-center">
-                    <span className="text-xl text-slate-300">Severe / High Fentanyl Use</span>
-                    <span className="text-cyan-400 font-mono font-bold text-2xl bg-slate-950 px-4 py-2 rounded">32 mg/day</span>
+                <div className="flex justify-between items-center bg-red-500/10 p-5 rounded-xl border border-red-500/30 shadow-[0_0_15px_rgba(239,68,68,0.05)] transition-colors hover:bg-red-500/20">
+                    <span className="text-xl text-slate-200 font-medium tracking-wide">Severe / High Fentanyl Use</span>
+                    <span className="text-red-500 font-black text-2xl drop-shadow-md">32 mg/day</span>
                 </div>
             </div>
-            <p className="text-sm text-slate-500 mt-8 italic text-left">Format: Suboxone (bup/naloxone) 8mg/2mg SL Film. Number dispensed varies by daily dose (#28, #42, #56).</p>
+            <p className="text-sm text-slate-500 mt-6 italic text-center">Format: Suboxone (bup/naloxone) 8mg/2mg SL Film. Number dispensed varies by daily dose (#28, #42, #56).</p>
         </div>
     </div>
 );
@@ -831,22 +1033,66 @@ const HarmReductionSlide = () => (
 /* --- SLIDE 26 --- */
 const SummarySlide = () => (
     <div className="max-w-5xl mx-auto w-full">
-        <div className="mb-8 text-center">
-            <h2 className="text-3xl font-bold mb-2">Clinical Summary</h2>
+        <div className="mb-10 text-center">
+            <h2 className="text-4xl font-extrabold mb-2 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Clinical Summary</h2>
+            <p className="text-slate-400 text-lg">Core takeaways for ED-initiated Buprenorphine.</p>
         </div>
-        <div className="space-y-3">
-            {[
-                "Buprenorphine is safe to start in the ED (Ceiling effect, No X-waiver).",
-                "Use COWS > 12 as a guide, but remember Fentanyl depot alters timelines.",
-                "Know Standard (4mg) vs Rapid (8mg) induction pathways.",
-                "Precipitated withdrawal is treatable (90-min bundle: more Bup, not less).",
-                "Discharge with 14-day supply, Naloxone, and a warm handoff."
-            ].map((item, i) => (
-                <div key={i} className="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-center gap-4">
-                    <div className="w-8 h-8 rounded bg-cyan-500/10 text-cyan-400 flex items-center justify-center font-bold shrink-0">{i + 1}</div>
-                    <p className="text-slate-300 font-medium">{item}</p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            {/* Card 1 */}
+            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 flex gap-5 items-start hover:border-cyan-500/50 transition-colors group shadow-lg">
+                <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-cyan-500/20 transition-all">
+                    <Shield size={28} />
                 </div>
-            ))}
+                <div>
+                    <h4 className="text-white font-bold text-lg mb-1">Safe to Initiate</h4>
+                    <p className="text-slate-400 text-sm leading-relaxed">High receptor affinity with a clinical ceiling effect makes it incredibly safe in the ED. No X-waiver is required.</p>
+                </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 flex gap-5 items-start hover:border-amber-500/50 transition-colors group shadow-lg">
+                <div className="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-amber-500/20 transition-all">
+                    <Activity size={28} />
+                </div>
+                <div>
+                    <h4 className="text-white font-bold text-lg mb-1">Objective Assessment</h4>
+                    <p className="text-slate-400 text-sm leading-relaxed">Use COWS &gt; 12 as your guide. Remember that the highly lipophilic Fentanyl depot wildly alters standard timelines.</p>
+                </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 flex gap-5 items-start hover:border-emerald-500/50 transition-colors group shadow-lg">
+                <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-emerald-500/20 transition-all">
+                    <TrendingUp size={28} />
+                </div>
+                <div>
+                    <h4 className="text-white font-bold text-lg mb-1">Know the Pathways</h4>
+                    <p className="text-slate-400 text-sm leading-relaxed">Confidently execute the Standard (4mg) versus Rapid (8mg) induction pathways based on withdrawal severity.</p>
+                </div>
+            </div>
+
+            {/* Card 4 */}
+            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 flex gap-5 items-start hover:border-red-500/50 transition-colors group shadow-lg">
+                <div className="w-14 h-14 rounded-2xl bg-red-500/10 text-red-500 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-red-500/20 transition-all">
+                    <Flame size={28} />
+                </div>
+                <div>
+                    <h4 className="text-white font-bold text-lg mb-1">Don't Fear the PW</h4>
+                    <p className="text-slate-400 text-sm leading-relaxed">Precipitated withdrawal is highly treatable. Use the 90-Minute Bundle (the way out is through: more Bup, not less).</p>
+                </div>
+            </div>
+        </div>
+
+        {/* Card 5 (Full Width) */}
+        <div className="bg-gradient-to-r from-purple-900/40 to-indigo-900/40 border border-purple-500/30 rounded-3xl p-6 flex gap-6 items-center shadow-[0_0_30px_rgba(168,85,247,0.15)] group hover:border-purple-400/60 transition-colors">
+            <div className="w-16 h-16 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                <HandHeart size={32} />
+            </div>
+            <div className="text-left flex-1">
+                <h4 className="text-white font-bold text-xl mb-1 flex items-center gap-2">The Final Step: Discharge <ArrowRight size={20} className="text-purple-400" /></h4>
+                <p className="text-purple-100/70 text-md font-medium">Always discharge with a 14-day Suboxone supply, an intranasal Naloxone kit, and a warm handoff to outpatient care.</p>
+            </div>
         </div>
     </div>
 );
@@ -1336,25 +1582,25 @@ const MaintenanceSelectionSlide = () => (
         <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 max-w-4xl mx-auto">
             <p className="text-slate-300 font-medium mb-6">Choose one daily maintenance regimen by matching induction versus home dosing:</p>
             <div className="space-y-4">
-                <div className="flex bg-slate-950 p-4 rounded-xl border border-slate-800 items-center">
-                    <div className="w-24 shrink-0 font-black text-cyan-400 text-2xl">8 mg</div>
+                <div className="flex bg-emerald-500/5 p-4 rounded-xl border border-slate-800 items-center border-l-4 border-emerald-500/50 hover:bg-emerald-500/10 transition-colors">
+                    <div className="w-24 shrink-0 font-black text-emerald-500/80 text-2xl drop-shadow-md">8 mg</div>
                     <div className="w-48 font-bold text-white">Sublingual, BID</div>
                     <div className="flex-1 text-slate-400">Twice daily — split dosing</div>
                 </div>
-                <div className="flex bg-slate-950 p-4 rounded-xl border border-slate-800 items-center border-l-4 border-cyan-500">
-                    <div className="w-24 shrink-0 font-black text-cyan-400 text-2xl">16 mg</div>
+                <div className="flex bg-emerald-500/10 p-4 rounded-xl border border-emerald-500/30 items-center border-l-4 border-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.1)] hover:bg-emerald-500/20 transition-colors">
+                    <div className="w-24 shrink-0 font-black text-emerald-400 text-2xl drop-shadow-md">16 mg</div>
                     <div className="w-48 font-bold text-white">Sublingual, Daily</div>
-                    <div className="flex-1 text-slate-400">Standard maintenance dose</div>
+                    <div className="flex-1 text-slate-300 font-medium">Standard maintenance dose</div>
                 </div>
-                <div className="flex bg-slate-950 p-4 rounded-xl border border-slate-800 items-center">
-                    <div className="w-24 shrink-0 font-black text-cyan-400 text-2xl">24 mg</div>
+                <div className="flex bg-amber-500/10 p-4 rounded-xl border border-slate-800 items-center border-l-4 border-amber-500 hover:bg-amber-500/20 transition-colors">
+                    <div className="w-24 shrink-0 font-black text-amber-400 text-2xl drop-shadow-md">24 mg</div>
                     <div className="w-48 font-bold text-white">Sublingual, Daily</div>
-                    <div className="flex-1 text-slate-400">Higher opioid dependence</div>
+                    <div className="flex-1 text-slate-300">Higher opioid dependence</div>
                 </div>
-                <div className="flex bg-slate-950 p-4 rounded-xl border border-slate-800 items-center">
-                    <div className="w-24 shrink-0 font-black text-cyan-400 text-2xl">32 mg</div>
+                <div className="flex bg-red-500/10 p-4 rounded-xl border border-slate-800 items-center border-l-4 border-red-500 hover:bg-red-500/20 transition-colors">
+                    <div className="w-24 shrink-0 font-black text-red-500 text-2xl drop-shadow-md">32 mg</div>
                     <div className="w-48 font-bold text-white">Sublingual, Daily</div>
-                    <div className="flex-1 text-slate-400">Severe opioid dependence</div>
+                    <div className="flex-1 text-red-300/80 font-medium tracking-wide">Severe opioid dependence</div>
                 </div>
             </div>
             <div className="mt-6 p-4 bg-slate-800/50 rounded-xl text-center text-sm text-slate-300">
@@ -1417,27 +1663,82 @@ const FinalHeuristicsSlide = () => (
 );
 
 const FromProtocolToPracticeSlide = () => (
-    <div className="max-w-5xl mx-auto w-full">
-        <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold mb-2">From Protocol to Practice</h2>
-            <p className="text-slate-400 text-lg">What if you could practice induction before they walk through the door?</p>
+    <div className="max-w-6xl mx-auto w-full">
+        <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 tracking-tight text-white">Didactic Theory <span className="text-cyan-500">vs</span> Real-World Practice</h2>
+            <div className="h-1.5 w-32 bg-gradient-to-r from-red-500 to-cyan-500 mx-auto rounded-full mb-4"></div>
+            <p className="text-slate-400 text-xl font-medium tracking-wide">Closing the "Confidence Gap" with High-Fidelity Simulation.</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="bg-slate-900 border border-slate-800 p-8 rounded-3xl">
-                <h3 className="text-2xl font-bold text-white mb-4">Didactic learning ≠ real-world skill.</h3>
-                <div className="space-y-6">
-                    <div>
-                        <h4 className="text-cyan-400 font-bold mb-2">The True Barriers:</h4>
-                        <p className="text-slate-400 text-sm">We under-screen due to time constraints, workflow issues, and simply <em>feeling awkward</em> initiating the conversation.</p>
-                    </div>
-                    <div>
-                        <h4 className="text-red-400 font-bold mb-2">High-Stakes Fear:</h4>
-                        <p className="text-slate-400 text-sm">Fear of precipitated withdrawal is a massive barrier with no easy way to practice safely.</p>
-                    </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+            {/* The Gap - Center Arrow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 hidden md:block">
+                <div className="bg-slate-950 p-4 rounded-full border-4 border-slate-900 shadow-[0_0_30px_rgba(6,182,212,0.5)] animate-pulse">
+                    <ArrowRight size={48} className="text-cyan-400" />
                 </div>
             </div>
-            <div className="flex justify-center">
-                <ActivitySquare size={120} className="text-cyan-400/80 animate-pulse" />
+
+            {/* Left: Didactic learning (The Struggle) */}
+            <div className="bg-slate-900/50 border-2 border-slate-800 p-10 rounded-[3rem] shadow-2xl relative overflow-hidden group hover:border-red-500/30 transition-all">
+                <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <Brain size={120} className="text-red-500" />
+                </div>
+                <h3 className="text-2xl font-bold text-red-400 mb-6 flex items-center gap-2">
+                    <AlertTriangle size={24} /> The Traditional Gap
+                </h3>
+                <ul className="space-y-8 relative z-10">
+                    <li className="flex gap-4 items-start">
+                        <div className="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center shrink-0 mt-1"><X size={18} className="text-red-500" /></div>
+                        <div>
+                            <span className="block text-white font-bold text-lg mb-1 italic">"Theory Fatigue"</span>
+                            <p className="text-slate-400 text-sm">Protocols are memorized but rarely practiced under pressure. Execution feels abstract.</p>
+                        </div>
+                    </li>
+                    <li className="flex gap-4 items-start">
+                        <div className="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center shrink-0 mt-1"><X size={18} className="text-red-500" /></div>
+                        <div>
+                            <span className="block text-white font-bold text-lg mb-1 italic">Precipitated Withdrawal</span>
+                            <p className="text-slate-400 text-sm">Fear of precipitated withdrawal remains a significant barrier, leading to provider hesitation and under-screening of valid candidates.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            {/* Right: BupSim (The Solution) */}
+            <div className="bg-cyan-500/5 border-2 border-cyan-500/20 p-10 rounded-[3rem] shadow-2xl relative overflow-hidden group hover:border-cyan-400/50 transition-all">
+                <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <ActivitySquare size={120} className="text-cyan-500" />
+                </div>
+                <h3 className="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+                    <Sparkles size={24} /> The BupSim Bridge
+                </h3>
+                <ul className="space-y-8 relative z-10">
+                    <li className="flex gap-4 items-start">
+                        <div className="w-8 h-8 rounded-full bg-cyan-500/10 flex items-center justify-center shrink-0 mt-1"><Check size={18} className="text-cyan-400" /></div>
+                        <div>
+                            <span className="block text-white font-bold text-lg mb-1 italic">Practice the Workflow</span>
+                            <p className="text-slate-400 text-sm">Practice full-cycle OUD management and induction execution on a virtual patient before doing it on a real one.</p>
+                        </div>
+                    </li>
+                    <li className="flex gap-4 items-start">
+                        <div className="w-8 h-8 rounded-full bg-cyan-500/10 flex items-center justify-center shrink-0 mt-1"><Check size={18} className="text-cyan-400" /></div>
+                        <div>
+                            <span className="block text-white font-bold text-lg mb-1 italic">Personalized Feedback</span>
+                            <p className="text-slate-400 text-sm">Immediate debriefs on guardrail violations and pathway execution accuracy.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div className="mt-12 text-center">
+            <div className="inline-flex items-center gap-4 bg-slate-900 px-8 py-4 rounded-2xl border border-slate-800 shadow-xl">
+                <span className="text-slate-200 font-bold uppercase tracking-widest text-sm">Transitioning to Simulation Walkthrough</span>
+                <div className="flex gap-1">
+                    <div className="w-2 h-2 rounded-full bg-cyan-500 animate-bounce delay-100"></div>
+                    <div className="w-2 h-2 rounded-full bg-cyan-500 animate-bounce delay-200"></div>
+                    <div className="w-2 h-2 rounded-full bg-cyan-500 animate-bounce delay-300"></div>
+                </div>
             </div>
         </div>
     </div>
