@@ -5,12 +5,13 @@ import {
     ChevronLeft, ChevronRight, Stethoscope, Users, HeartPulse,
     Crosshair, Map, Pill, Thermometer, ClipboardCheck,
     BadgeAlert, Sparkles, LineChart, HandHeart,
-    Baby, AlertCircle, Phone, Syringe, Mic, Droplets, Eye, Zap, Flame, Maximize
+    Baby, AlertCircle, Phone, Syringe, Mic, Droplets, Eye, Zap, Flame, Maximize, ChevronUp, Lock, CheckCircle, FileText, ShoppingCart, Clipboard, X, Check, Package, Search, Plus, ArrowDown
 } from 'lucide-react';
 import mariaImg from './Media/Lanscape dark.jpeg';
 import step1 from './Media/step1.png';
 import step2 from './Media/step2.png';
 import step3 from './Media/step3.png';
+import bupSimIcon from './Media/apple-touch-icon.png';
 
 const SlideViewer = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -52,14 +53,13 @@ const SlideViewer = () => {
         <ReceptorPharmacologySlide key="7" />,
         <BupVsMethadoneSlide key="8" />,
         <AssessmentIntertitleSlide key="8.5" />,
-        <FentanylGameChangerSlide key="9" />,
         <RecognizingWithdrawalSlide key="10" />,
         <WithdrawalTimelinesSlide key="11" />,
+        <FentanylGameChangerSlide key="9" />,
         <PreInductionChecklistSlide key="12" />,
         <COWSSlide key="13" />,
         <ObjectiveSignsSlide key="14" />,
-        <StandardInductionSlide key="15" />,
-        <RapidInductionSlide key="16" />,
+        <InductionPathwaysSlide key="15" />,
         <MaintenanceSelectionSlide key="16.5" />,
         <ComplicatingMethadoneSlide key="17" />,
         <ComplicatingPregnancyPainSlide key="18" />,
@@ -78,6 +78,8 @@ const SlideViewer = () => {
         <MeetMariaSlide key="28" />,
         <AIVoiceSlide key="29" />,
         <ClinicalInterfaceSlide key="30" />,
+        <COWSAssessmentExampleSlide key="30.1" />,
+        <QuickOrderExampleSlide key="30.2" />,
         <PersonalizedDebriefSlide key="31" />,
         <AnalyticsSlide key="32" />,
         <SimulatorStep1Slide key="32.1" />,
@@ -506,82 +508,95 @@ const ObjectiveSignsSlide = () => (
     </div>
 );
 
-/* --- SLIDE 15 --- */
-const StandardInductionSlide = () => (
-    <div className="max-w-5xl mx-auto w-full text-center">
-        <h2 className="text-3xl font-bold mb-2">Standard Induction Pathway</h2>
-        <p className="text-slate-400 text-lg mb-10">Appropriate for general ED/Floor use. Target 16mg/day.</p>
-        <div className="max-w-2xl mx-auto bg-slate-900 rounded-3xl p-8 border border-slate-800 shadow-2xl text-left">
-            <div className="space-y-8">
-                <div className="flex gap-6 items-center">
-                    <div className="w-12 h-12 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-xl shrink-0">1</div>
-                    <div>
-                        <h4 className="font-bold text-xl text-white">Assess COWS &ge; 8</h4>
-                        <p className="text-slate-400">Ensure patient is in mild/moderate withdrawal.</p>
+/* --- SLIDE 15/16 COMBINED --- */
+const InductionPathwaysSlide = () => (
+    <div className="max-w-7xl mx-auto w-full text-center">
+        <h2 className="text-3xl font-bold mb-2">Induction Pathways</h2>
+        <div className="flex flex-col items-center mb-8 gap-4">
+            <p className="text-slate-400 text-lg">Wait for moderate to severe withdrawal before beginning pathway.</p>
+            <div className="bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-medium px-8 py-2 rounded-full inline-block">
+                The goal is 16 mg on Day 1 for both pathways.
+            </div>
+        </div>
+        
+        <div className="flex flex-col md:flex-row gap-8 justify-center items-stretch">
+            {/* Standard Pathway */}
+            <div className="flex-1 max-w-md bg-slate-900 rounded-3xl p-8 border border-slate-800 shadow-2xl text-left flex flex-col">
+                <h3 className="text-2xl font-bold text-white mb-2">Standard Induction</h3>
+                <p className="text-slate-400 text-sm mb-8 flex-1">For most patients.</p>
+                
+                <div className="space-y-6">
+                    <div className="flex gap-4 items-center">
+                        <div className="w-10 h-10 rounded-full bg-cyan-600 text-white flex items-center justify-center font-bold shrink-0">1</div>
+                        <div>
+                            <h4 className="font-bold text-white">First Dose</h4>
+                            <p className="text-slate-400 text-sm">4 mg buprenorphine TAB SOL, Sublingual, X1.</p>
+                        </div>
+                    </div>
+                    <div className="flex gap-4 items-center">
+                        <div className="w-10 h-10 rounded-full bg-cyan-600 text-white flex items-center justify-center font-bold shrink-0">2</div>
+                        <div>
+                            <h4 className="font-bold text-white">Reassess</h4>
+                            <p className="text-slate-400 text-sm">Perform reassessment in 60 minutes.</p>
+                        </div>
+                    </div>
+                    <div className="flex gap-4 items-center">
+                        <div className="w-10 h-10 rounded-full bg-cyan-600 text-white flex items-center justify-center font-bold shrink-0">3</div>
+                        <div>
+                            <h4 className="font-bold text-white">Re-evaluate</h4>
+                            <p className="text-slate-400 text-sm">Check COWS &amp; symptoms. Look for precipitated withdrawal.</p>
+                        </div>
+                    </div>
+                    <div className="flex gap-4 items-center">
+                        <div className="w-10 h-10 rounded-full bg-cyan-600 text-white flex items-center justify-center font-bold shrink-0">4</div>
+                        <div>
+                            <h4 className="font-bold text-white">Subsequent Doses</h4>
+                            <p className="text-slate-400 text-sm">4 mg buprenorphine TAB SOL, Sublingual, PRN.</p>
+                        </div>
                     </div>
                 </div>
-                <div className="flex gap-6 items-center">
-                    <div className="w-12 h-12 rounded-full bg-cyan-600 text-white flex items-center justify-center font-bold text-xl shrink-0">2</div>
-                    <div>
-                        <h4 className="font-bold text-xl text-white">Give 4 mg SL</h4>
-                        <p className="text-slate-400">Administer initial sublingual dose.</p>
+            </div>
+
+            {/* Rapid Pathway */}
+            <div className="flex-1 max-w-md bg-slate-900 rounded-3xl p-8 border-2 border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.1)] text-left flex flex-col">
+                <h3 className="text-2xl font-bold text-cyan-400 mb-2">Rapid Induction</h3>
+                <p className="text-cyan-400/70 text-sm mb-8 flex-1">For medically supervised settings (ED or ICU).</p>
+                
+                <div className="space-y-6">
+                    <div className="flex gap-4 items-center">
+                        <div className="w-10 h-10 rounded-full bg-cyan-500 text-slate-900 flex items-center justify-center font-bold shrink-0">1</div>
+                        <div>
+                            <h4 className="font-bold text-white">First Dose</h4>
+                            <p className="text-slate-400 text-sm">8 mg buprenorphine TAB SOL, Sublingual, X1.</p>
+                        </div>
                     </div>
-                </div>
-                <div className="flex gap-6 items-center">
-                    <div className="w-12 h-12 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-xl shrink-0">3</div>
-                    <div>
-                        <h4 className="font-bold text-xl text-white">Wait 60 Mins & Reassess</h4>
-                        <p className="text-slate-400">Check for improvement or worsening.</p>
+                    <div className="flex gap-4 items-center">
+                        <div className="w-10 h-10 rounded-full bg-cyan-500 text-slate-900 flex items-center justify-center font-bold shrink-0">2</div>
+                        <div>
+                            <h4 className="font-bold text-white">Reassess</h4>
+                            <p className="text-slate-400 text-sm">Perform reassessment in 60 minutes.</p>
+                        </div>
                     </div>
-                </div>
-                <div className="flex gap-6 items-center">
-                    <div className="w-12 h-12 rounded-full bg-cyan-600 text-white flex items-center justify-center font-bold text-xl shrink-0">4</div>
-                    <div>
-                        <h4 className="font-bold text-xl text-white">Give 4 mg SL (PRN)</h4>
-                        <p className="text-slate-400">Repeat until significant relief is achieved.</p>
+                    <div className="flex gap-4 items-center">
+                        <div className="w-10 h-10 rounded-full bg-cyan-500 text-slate-900 flex items-center justify-center font-bold shrink-0">3</div>
+                        <div>
+                            <h4 className="font-bold text-white">Re-evaluate</h4>
+                            <p className="text-slate-400 text-sm">Check COWS &amp; symptoms. Look for precipitated withdrawal.</p>
+                        </div>
+                    </div>
+                    <div className="flex gap-4 items-center">
+                        <div className="w-10 h-10 rounded-full bg-cyan-500 text-slate-900 flex items-center justify-center font-bold shrink-0">4</div>
+                        <div>
+                            <h4 className="font-bold text-white">Subsequent Doses</h4>
+                            <p className="text-cyan-400 text-sm font-medium">8 mg buprenorphine TAB SOL, Sublingual, PRN.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-);
 
-/* --- SLIDE 16 --- */
-const RapidInductionSlide = () => (
-    <div className="max-w-5xl mx-auto w-full text-center">
-        <h2 className="text-3xl font-bold mb-2">Rapid Induction Pathway</h2>
-        <p className="text-slate-400 text-lg mb-10">Appropriate for High-Acuity ED/ICU. Target 16-24mg/day.</p>
-        <div className="max-w-2xl mx-auto bg-slate-900 rounded-3xl p-8 border-2 border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.1)] text-left">
-            <div className="space-y-8">
-                <div className="flex gap-6 items-center">
-                    <div className="w-12 h-12 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-xl shrink-0">1</div>
-                    <div>
-                        <h4 className="font-bold text-xl text-white">Assess COWS &ge; 12</h4>
-                        <p className="text-slate-400">Higher threshold required for larger initial dose.</p>
-                    </div>
-                </div>
-                <div className="flex gap-6 items-center">
-                    <div className="w-12 h-12 rounded-full bg-cyan-500 text-slate-900 flex items-center justify-center font-bold text-xl shrink-0">2</div>
-                    <div>
-                        <h4 className="font-bold text-xl text-white">Give 8 mg SL</h4>
-                        <p className="text-cyan-400 font-medium">Aggressive upfront blockade.</p>
-                    </div>
-                </div>
-                <div className="flex gap-6 items-center">
-                    <div className="w-12 h-12 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-xl shrink-0">3</div>
-                    <div>
-                        <h4 className="font-bold text-xl text-white">Wait 60 Mins & Reassess</h4>
-                        <p className="text-slate-400">Check for improvement or worsening.</p>
-                    </div>
-                </div>
-                <div className="flex gap-6 items-center">
-                    <div className="w-12 h-12 rounded-full bg-cyan-500 text-slate-900 flex items-center justify-center font-bold text-xl shrink-0">4</div>
-                    <div>
-                        <h4 className="font-bold text-xl text-white">Give 8 mg SL (PRN)</h4>
-                        <p className="text-cyan-400 font-medium">Repeat until COWS &le; 4.</p>
-                    </div>
-                </div>
-            </div>
+        <div className="mt-8 inline-block bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 px-8 py-4 rounded-xl shadow-lg max-w-2xl font-medium">
+            Goal: Significant relief in withdrawal symptoms or generally COWS &le; 4, indicating mild symptoms.
         </div>
     </div>
 );
@@ -839,8 +854,8 @@ const SummarySlide = () => (
 /* --- SLIDE 27 --- */
 const BupSimIntroSlide = () => (
     <div className="max-w-5xl mx-auto w-full text-center">
-        <div className="w-24 h-24 bg-cyan-500/20 text-cyan-400 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Zap size={48} />
+        <div className="w-32 h-32 flex items-center justify-center mx-auto mb-6">
+            <img src={bupSimIcon} alt="BupSim Logo" className="w-full h-full object-contain drop-shadow-2xl rounded-[1.5rem]" />
         </div>
         <h2 className="text-4xl font-bold mb-4 text-white">Introduction to BupSim</h2>
         <p className="text-xl text-slate-400 mb-8 max-w-2xl mx-auto">Bridging the gap between didactic learning and high-stakes clinical execution.</p>
@@ -859,7 +874,7 @@ const MeetMariaSlide = () => (
         <div className="bg-slate-900 rounded-3xl border border-slate-800 overflow-hidden shadow-2xl flex flex-col md:flex-row">
             <div className="bg-slate-800 p-10 flex flex-col items-center justify-center border-r border-slate-700 md:w-1/3">
                 <div className="w-32 h-32 bg-slate-700 rounded-full flex items-center justify-center mb-4 border-4 border-cyan-500 overflow-hidden">
-                    <img src={mariaImg} alt="Maria Torres" className="w-full h-full object-cover scale-[1.5] object-top translate-y-4" />
+                    <img src={mariaImg} alt="Maria Torres" className="w-full h-full object-cover scale-[1.8] object-top translate-y-10" />
                 </div>
                 <h3 className="text-2xl font-bold text-white">Maria Torres</h3>
                 <p className="text-cyan-400 font-medium">32 Y/O Female</p>
@@ -867,7 +882,7 @@ const MeetMariaSlide = () => (
             <div className="p-10 space-y-6 md:w-2/3">
                 <div>
                     <h4 className="text-slate-500 uppercase tracking-wider text-sm font-bold mb-1">Chief Complaint</h4>
-                    <p className="text-white text-lg">"I feel like my skin is crawling."</p>
+                    <p className="text-white text-lg">"I have a headache and feel nauseated."</p>
                 </div>
                 <div>
                     <h4 className="text-slate-500 uppercase tracking-wider text-sm font-bold mb-1">HPI Context</h4>
@@ -880,28 +895,30 @@ const MeetMariaSlide = () => (
 
 /* --- SLIDE 29 --- */
 const AIVoiceSlide = () => (
-    <div className="max-w-5xl mx-auto w-full">
-        <h2 className="text-3xl font-bold mb-10 text-center">Powered by Google Gemini Live</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-                <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex gap-4">
-                    <Mic className="text-purple-400 shrink-0 mt-1" size={28} />
-                    <div>
-                        <h4 className="font-bold text-white text-lg">Natural Voice Interaction</h4>
-                        <p className="text-slate-400 text-sm">Speak to the iPad directly. The AI processes your clinical questions and empathetic tone in real-time.</p>
+    <div className="max-w-5xl mx-auto w-full h-full flex flex-col justify-between">
+        <div className="flex-1 flex flex-col justify-center">
+            <h2 className="text-3xl font-bold mb-10 text-center">Powered by Google Gemini Live</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div className="space-y-8">
+                    <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex gap-4">
+                        <Mic className="text-purple-400 shrink-0 mt-1" size={28} />
+                        <div>
+                            <h4 className="font-bold text-white text-lg">Natural Voice Interaction</h4>
+                            <p className="text-slate-400 text-sm">Speak to the iPad directly. The AI processes your clinical questions and empathetic tone in real-time.</p>
+                        </div>
+                    </div>
+                    <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex gap-4">
+                        <Brain className="text-purple-400 shrink-0 mt-1" size={28} />
+                        <div>
+                            <h4 className="font-bold text-white text-lg">Dynamic Responses</h4>
+                            <p className="text-slate-400 text-sm">Maria’s physiological state updates based on your meds, altering her voice, anxiety level, and reported symptoms.</p>
+                        </div>
                     </div>
                 </div>
-                <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex gap-4">
-                    <Brain className="text-purple-400 shrink-0 mt-1" size={28} />
-                    <div>
-                        <h4 className="font-bold text-white text-lg">Dynamic Responses</h4>
-                        <p className="text-slate-400 text-sm">Maria’s physiological state updates based on your meds, altering her voice, anxiety level, and reported symptoms.</p>
-                    </div>
+                <div className="bg-slate-800 rounded-3xl p-8 border border-purple-500/30 shadow-[0_0_40px_rgba(168,85,247,0.15)] text-center">
+                    <p className="text-xl text-purple-200 italic font-light">"Are you sure this medication isn't going to make me feel worse? My friend told me it throws you into terrible withdrawals..."</p>
+                    <p className="mt-6 text-sm text-purple-400 font-bold uppercase tracking-widest">— Patient Persona Output</p>
                 </div>
-            </div>
-            <div className="bg-slate-800 rounded-3xl p-8 border border-purple-500/30 shadow-[0_0_40px_rgba(168,85,247,0.15)] text-center">
-                <p className="text-xl text-purple-200 italic font-light">"Are you sure this medication isn't going to make me feel worse? My friend told me it throws you into terrible withdrawals..."</p>
-                <p className="mt-6 text-sm text-purple-400 font-bold uppercase tracking-widest">— Patient Persona Output</p>
             </div>
         </div>
     </div>
@@ -911,35 +928,302 @@ const AIVoiceSlide = () => (
 
 /* --- SLIDE 30 --- */
 const ClinicalInterfaceSlide = () => (
-    <div className="max-w-5xl mx-auto w-full">
-        <h2 className="text-3xl font-bold mb-8 text-center">BupSim: Clinical Interface</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-6">
-                <div className="bg-slate-900 border-l-4 border-cyan-500 p-6 rounded-2xl">
-                    <h4 className="font-bold text-white text-lg mb-1">The HUD</h4>
-                    <p className="text-sm text-slate-400">Displays your current step and clinical objectives.</p>
+    <div className="max-w-6xl mx-auto w-full h-[650px] flex flex-col relative bg-slate-950/20 rounded-[3rem] border border-white/5 overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.5)] p-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 via-transparent to-purple-500/5 pointer-events-none"></div>
+
+        {/* 1. TOP: MOCK SMART HUD */}
+        <div className="w-full pt-6 flex justify-center z-20">
+            <div className="w-full max-w-2xl bg-black/25 backdrop-blur-xl border border-white/10 rounded-full p-2 flex items-center justify-between shadow-2xl relative overflow-hidden group">
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-white/5"></div>
+                <div className="absolute bottom-0 left-0 w-[10%] h-[1px] bg-gradient-to-r from-cyan-400 to-blue-500"></div>
+                
+                <div className="flex items-center gap-4 pl-3">
+                    <div className="w-10 h-10 rounded-full bg-white/5 border border-cyan-500/30 text-cyan-400 flex items-center justify-center font-bold text-lg">1</div>
+                    <div className="flex flex-col">
+                        <span className="text-[10px] uppercase tracking-widest text-white/40 font-bold">Step 1 of 8</span>
+                        <span className="text-white font-medium text-[13px] leading-none">Clinical Orientation</span>
+                    </div>
                 </div>
-                <div className="bg-slate-900 border-l-4 border-emerald-500 p-6 rounded-2xl">
-                    <h4 className="font-bold text-white text-lg mb-1">Clinical Guardrails</h4>
-                    <p className="text-sm text-slate-400">Steps remain locked until critical actions (like COWS assessment) are completed.</p>
+
+                <div className="pr-1">
+                    <div className="bg-black/40 text-white/20 border border-white/5 px-6 py-2 rounded-full flex items-center gap-2 text-xs font-semibold">
+                        Next Step <Lock size={12} />
+                    </div>
                 </div>
             </div>
-            <div className="bg-slate-800 p-8 rounded-3xl grid grid-cols-2 gap-4">
-                <div className="bg-slate-900 border border-slate-700 p-4 rounded-xl text-center flex flex-col items-center justify-center">
-                    <ActivitySquare className="text-cyan-400 mb-2" size={32} />
-                    <span className="text-sm font-bold text-slate-200">COWS</span>
+        </div>
+
+        {/* 2. MIDDLE: PatientView Frame with Slide Content */}
+        <div className="flex-1 mt-6 px-10 relative z-10 flex flex-col">
+            <div className="flex-1 bg-slate-900/40 backdrop-blur-sm rounded-[2.5rem] border border-white/5 p-8 flex flex-col shadow-inner">
+                <div className="flex items-center justify-between mb-8 opacity-50">
+                    <h3 className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em]">Patient: Maria Torres (Learning Mode)</h3>
+                    <div className="flex gap-4">
+                        <div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></div><span className="text-[10px] text-cyan-400 font-bold uppercase tracking-widest">Live</span></div>
+                    </div>
                 </div>
-                <div className="bg-slate-900 border border-slate-700 p-4 rounded-xl text-center flex flex-col items-center justify-center">
-                    <Crosshair className="text-purple-400 mb-2" size={32} />
-                    <span className="text-sm font-bold text-slate-200">Orders</span>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center flex-1">
+                    <div className="space-y-6">
+                        <div className="bg-[#1a1c23]/60 border-l-4 border-cyan-500 p-6 rounded-2xl shadow-lg">
+                            <h4 className="font-bold text-white text-lg mb-1">Clinical Instruction</h4>
+                            <p className="text-sm text-slate-400">Everything you see here mirrors the real iPad interface, allowing for zero-friction transition to clinical practice.</p>
+                        </div>
+                        <div className="bg-[#1a1c23]/60 border-l-4 border-emerald-500 p-6 rounded-2xl shadow-lg">
+                            <h4 className="font-bold text-white text-lg mb-1">Smart Guardrails</h4>
+                            <p className="text-sm text-slate-400">Clinical logic prevents 'ordering' medications prematurely, ensuring follow-through on assessment best practices.</p>
+                        </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-5 flex-1">
+                        {/* COWS */}
+                        <div className="flex flex-col items-center p-6 bg-white/5 border border-white/5 rounded-[2rem] transition-all relative overflow-hidden backdrop-blur-sm">
+                            <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 flex items-center justify-center mb-4 transition-transform">
+                                <Activity size={24} className="text-cyan-400" />
+                            </div>
+                            <span className="text-sm font-bold text-white text-center">COWS Assessment</span>
+                            <span className="text-[10px] text-white/40 mt-1 text-center font-medium">Withdrawal Scale</span>
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-full blur-2xl -z-10 translate-x-8 -translate-y-8"></div>
+                        </div>
+
+                        {/* Discharge */}
+                        <div className="flex flex-col items-center p-6 bg-white/5 border border-white/5 rounded-[2rem] transition-all relative overflow-hidden backdrop-blur-sm">
+                            <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-4 transition-transform">
+                                <FileText size={24} className="text-emerald-400" />
+                            </div>
+                            <span className="text-sm font-bold text-white text-center">Discharge Plan</span>
+                            <span className="text-[10px] text-white/40 mt-1 text-center font-medium">Rx & Follow-up</span>
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl -z-10 translate-x-8 -translate-y-8"></div>
+                        </div>
+
+                        {/* Quick Orders */}
+                        <div className="flex flex-col items-center p-6 bg-white/5 border border-white/5 rounded-[2rem] transition-all relative overflow-hidden backdrop-blur-sm">
+                            <div className="w-12 h-12 rounded-2xl bg-green-500/20 flex items-center justify-center mb-4 transition-transform">
+                                <ShoppingCart size={24} className="text-green-400" />
+                            </div>
+                            <span className="text-sm font-bold text-white text-center">Quick Orders</span>
+                            <span className="text-[10px] text-white/40 mt-1 text-center font-medium">Meds & Labs</span>
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-green-500/5 rounded-full blur-2xl -z-10 translate-x-8 -translate-y-8"></div>
+                        </div>
+
+                        {/* Results */}
+                        <div className="flex flex-col items-center p-6 bg-white/5 border border-white/5 rounded-[2rem] transition-all relative overflow-hidden backdrop-blur-sm">
+                            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 flex items-center justify-center mb-4 shadow-[0_0_20px_rgba(16,185,129,0.05)]">
+                                <Clipboard size={24} className="text-emerald-400" />
+                            </div>
+                            <span className="text-sm font-bold text-white text-center">Results</span>
+                            <span className="text-[10px] text-white/40 mt-1 text-center font-medium">Reports</span>
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl -z-10 translate-x-8 -translate-y-8"></div>
+                        </div>
+                    </div>
                 </div>
-                <div className="bg-slate-900 border border-slate-700 p-4 rounded-xl text-center flex flex-col items-center justify-center">
-                    <ClipboardCheck className="text-emerald-400 mb-2" size={32} />
-                    <span className="text-sm font-bold text-slate-200">Labs</span>
+            </div>
+        </div>
+
+        {/* 3. BOTTOM: MOCK CLINICAL DRAWER / BOTTOM DOCK */}
+        <div className="w-full pb-8 pt-4 flex flex-col items-center z-20">
+            <div className="w-full max-w-4xl mx-auto h-[75px] bg-black/40 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-between px-8 shadow-2xl relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-transparent to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                
+                <div className="w-12 h-12 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center shadow-lg">
+                    <ChevronUp size={24} />
                 </div>
-                <div className="bg-slate-900 border border-slate-700 p-4 rounded-xl text-center flex flex-col items-center justify-center">
-                    <Pill className="text-amber-400 mb-2" size={32} />
-                    <span className="text-sm font-bold text-slate-200">Rx</span>
+
+                <div className="flex-1"></div>
+
+                <div className="relative h-12 px-6 bg-cyan-500/10 border border-cyan-500/30 text-white shadow-[0_0_30px_rgba(6,182,212,0.2)] rounded-full flex items-center gap-3 transition-all">
+                    <Sparkles size={18} className="text-cyan-400" />
+                    <div className="flex flex-col items-start leading-none">
+                        <span className="text-[11px] font-bold uppercase tracking-wider">Gemini</span>
+                        <span className="text-[9px] font-medium opacity-50">Assistant</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+/* --- SLIDE 30.1 --- */
+const COWSAssessmentExampleSlide = () => (
+    <div className="max-w-6xl mx-auto w-full h-[650px] relative bg-slate-900/40 backdrop-blur-xl rounded-[3rem] border border-white/10 overflow-hidden shadow-2xl flex flex-col">
+        {/* Floating Composite Score - Top Right */}
+        <div className="absolute top-8 right-8 z-50">
+            <div className="bg-[#1a1f2e] border border-white/20 rounded-2xl px-6 py-3 shadow-2xl flex flex-col items-center min-w-[140px] scale-100">
+                <span className="text-[10px] font-bold text-gray-400 tracking-widest uppercase mb-1">COMPOSITE SCORE</span>
+                <div className="flex flex-col items-center">
+                    <span className="text-4xl font-bold text-white">14</span>
+                    <span className="text-xs font-bold uppercase tracking-wider mt-1 text-orange-400">MODERATE</span>
+                </div>
+            </div>
+        </div>
+
+        {/* Close Button - Top Left */}
+        <div className="absolute top-8 left-8 z-50 text-white/30 hover:text-white transition-colors cursor-default">
+            <X size={24} />
+        </div>
+
+        {/* Header Section */}
+        <div className="px-12 pt-24 pb-8">
+            <div className="max-w-2xl mx-auto w-full">
+                <div className="mb-6">
+                    <h2 className="text-2xl font-bold text-white mb-1">Resting Pulse Rate</h2>
+                    <p className="text-gray-400 text-sm italic">Measured after patient is sitting or lying for one minute</p>
+                </div>
+
+                {/* Clinical Findings Callout */}
+                <div className="mb-10 bg-blue-500/5 p-4 rounded-xl border border-blue-500/10 transition-all">
+                    <div className="text-[10px] font-bold tracking-[0.2em] text-blue-400 uppercase mb-2">CLINICAL FINDINGS</div>
+                    <div className="flex items-start gap-3">
+                        <div className="w-1 self-stretch bg-blue-500 rounded-full"></div>
+                        <p className="text-lg text-white font-medium leading-tight">Maria's pulse rate is 108 bpm.</p>
+                    </div>
+                </div>
+
+                {/* Options Grid */}
+                <div className="space-y-3">
+                    <div className="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase mb-4">SELECT RATING</div>
+                    
+                    <div className="flex items-center p-4 rounded-2xl border border-white/5 bg-white/5 text-gray-400 opacity-60">
+                        <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-sm font-bold mr-4">0</div>
+                        <span className="text-base font-medium">Pulse rate 80 or below</span>
+                    </div>
+
+                    <div className="flex items-center p-4 rounded-2xl border border-white/5 bg-white/5 text-gray-400 opacity-60">
+                        <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-sm font-bold mr-4">1</div>
+                        <span className="text-base font-medium">Pulse rate 81-100</span>
+                    </div>
+
+                    <div className="flex items-center p-4 rounded-2xl border border-cyan-500 bg-cyan-500/10 text-white shadow-[0_0_20px_rgba(6,182,212,0.1)] scale-[1.02]">
+                        <div className="w-8 h-8 rounded-lg bg-cyan-500 flex items-center justify-center text-sm font-bold mr-4 text-black">2</div>
+                        <span className="text-base font-bold">Pulse rate 101-120</span>
+                        <Check size={18} className="ml-auto text-cyan-400" />
+                    </div>
+
+                    <div className="flex items-center p-4 rounded-2xl border border-white/5 bg-white/5 text-gray-400 opacity-60">
+                        <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-sm font-bold mr-4">4</div>
+                        <span className="text-base font-medium">Pulse rate greater than 120</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {/* Footer: Pagination Mockup */}
+        <div className="mt-auto pb-8 flex flex-col items-center gap-3">
+            <div className="flex items-center gap-6">
+                <ChevronLeft size={20} className="text-white/20" />
+                <div className="flex gap-2.5">
+                    <div className="w-2 h-2 rounded-full bg-white scale-125"></div>
+                    {[...Array(10)].map((_, i) => (
+                        <div key={i} className="w-2 h-2 rounded-full bg-white/20"></div>
+                    ))}
+                    <div className="w-2 h-2 rounded-full bg-blue-500/40"></div>
+                </div>
+                <ChevronRight size={20} className="text-white/40" />
+            </div>
+            <div className="text-[10px] font-bold tracking-[0.3em] text-white/20 uppercase">ITEM 1 OF 11</div>
+        </div>
+    </div>
+);
+
+/* --- SLIDE 30.2 --- */
+const QuickOrderExampleSlide = () => (
+    <div className="max-w-6xl mx-auto w-full h-[650px] relative bg-slate-900/40 backdrop-blur-xl rounded-[3rem] border border-white/10 overflow-hidden shadow-2xl flex flex-col">
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b border-white/10 bg-white/5">
+            <div className="flex items-center gap-3">
+                <div className="p-2 bg-cyan-500/10 rounded-lg">
+                    <Package className="text-cyan-400" size={20} />
+                </div>
+                <h2 className="font-bold text-lg tracking-wide text-white">Quick Orders</h2>
+            </div>
+            <div className="text-white/30"><X size={20} /></div>
+        </div>
+
+        <div className="flex flex-1 overflow-hidden">
+            {/* Left Catalog */}
+            <div className="flex-1 flex flex-col border-r border-white/10 overflow-hidden">
+                {/* Tabs */}
+                <div className="flex p-4 gap-2 bg-black/20">
+                    <div className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border bg-cyan-500/10 border-cyan-500/50 text-cyan-400 font-bold text-sm">
+                        <Pill size={16} /> Medications
+                    </div>
+                    <div className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border bg-white/5 border-white/5 text-gray-500 font-medium text-sm italic">
+                        <Activity size={16} /> Diagnostics
+                    </div>
+                </div>
+
+                <div className="p-4 space-y-6">
+                    {/* Search Mock */}
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
+                        <div className="w-full bg-[#1a1a1a] border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-gray-600">
+                            Search medications...
+                        </div>
+                    </div>
+
+                    {/* Category */}
+                    <div className="space-y-3">
+                        <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg border bg-cyan-500/10 border-cyan-500/25">
+                            <Pill size={14} className="text-cyan-400" />
+                            <span className="text-[11px] font-bold uppercase tracking-widest text-cyan-400">
+                                MAT / Opioid Treatment
+                            </span>
+                        </div>
+
+                        {/* List Items */}
+                        <div className="space-y-2">
+                            <div className="flex items-center justify-between p-4 rounded-xl border bg-white/5 border-white/10 opacity-50">
+                                <div>
+                                    <div className="flex items-baseline gap-2">
+                                        <span className="text-base font-semibold text-white/50">Buprenorphine</span>
+                                        <span className="text-sm font-bold text-gray-500">4 mg</span>
+                                    </div>
+                                    <span className="text-xs italic text-gray-600">Subutex · SL</span>
+                                </div>
+                                <Plus size={18} className="text-gray-600" />
+                            </div>
+
+                            <div className="flex items-center justify-between p-4 rounded-xl border bg-cyan-400/10 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.15)] relative overflow-hidden group">
+                                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-transparent pointer-events-none"></div>
+                                <div>
+                                    <div className="flex items-baseline gap-2">
+                                        <span className="text-base font-bold text-cyan-100">Buprenorphine</span>
+                                        <span className="text-sm font-bold text-cyan-300">8 mg</span>
+                                    </div>
+                                    <span className="text-xs italic text-cyan-300/60">Subutex · SL</span>
+                                </div>
+                                <div className="bg-cyan-500/20 p-1.5 rounded-lg">
+                                    <CheckCircle2 size={18} className="text-cyan-400" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Right Side: Cart */}
+            <div className="w-80 flex flex-col bg-black/20 p-6 border-l border-white/5 relative">
+                <div className="flex items-center gap-2 mb-6 text-gray-400 text-[10px] uppercase tracking-widest font-bold">
+                    <ShoppingCart size={14} />
+                    <span>Current Order</span>
+                </div>
+
+                <div className="flex-1">
+                    <div className="bg-white/5 rounded-xl p-4 border border-white/10 flex justify-between items-center animate-in fade-in slide-in-from-right-4">
+                        <div>
+                            <span className="block text-sm font-bold text-white">Buprenorphine 8 mg</span>
+                            <span className="text-[10px] text-white/30 uppercase tracking-tighter font-mono">SL · Ready to Sign</span>
+                        </div>
+                        <X size={14} className="text-white/20" />
+                    </div>
+                </div>
+
+                <div className="pt-6 border-t border-white/10">
+                    <button className="w-full py-4 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-2xl font-bold text-sm text-white shadow-xl shadow-cyan-900/20 flex items-center justify-center gap-2 transition-transform hover:scale-[1.02]">
+                        <span>Sign & Order</span>
+                        <ChevronRight size={18} />
+                    </button>
+                    <p className="text-[9px] text-center text-white/20 mt-4 uppercase tracking-widest font-medium">BupSim Verification Required</p>
                 </div>
             </div>
         </div>
